@@ -30,7 +30,7 @@ func CreateShortUrl(c *gin.Context) {
 }
 
 func HandleShortUrlRedirect(c *gin.Context) {
-	shortUrl := c.Param("shortcut")
+	shortUrl := c.Param("shortUrl")
 	initalUrl := store.RetrieveInitialUrl(shortUrl)
 	c.Redirect(302, initalUrl)
 }
