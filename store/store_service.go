@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -17,3 +18,20 @@ var (
 )
 
 const CacheDuration = 6 * time.Hour
+
+func InitializeStorage() *StorageService {
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
+
+	pong, err := redisClient.ping(ctx).Result()
+	if err != nil {
+		panic(fmt.Sprintf("Error init Redis - Error: %v", err))
+	}
+
+	fmt.Printf("\nReddis stared successfully - pong message: {%s}", pong)
+	storeService.redisClient = redisClient
+	return storeService
+}
