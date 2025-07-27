@@ -15,7 +15,7 @@ var storeService = &StorageService{}
 
 const CacheDuration = 6 * time.Hour
 
-func InitializeStorage() *StorageService {
+func InitializeStore() *StorageService {
 	redisClient := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "",
@@ -39,7 +39,7 @@ func SaveUrlMapping(shortUrl string, originalUrl string, userId string) {
 	}
 }
 
-func RetriveInitialUrl(shortUrl string) string {
+func RetrieveInitialUrl(shortUrl string) string {
 	result, err := storeService.redisClient.Get(shortUrl).Result()
 	if err != nil {
 		panic(fmt.Sprintf("Failed RetriveIntialUrl url | Error: %v - shortUrl: %s\n", err, shortUrl))
