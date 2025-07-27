@@ -42,3 +42,11 @@ func SaveUrlMapping(shortUrl string, originalUrl string, userId string) {
 		panic(fmt.Sprintf("Failed saving key url | Error: %v - shortUrl: %s - originalUrl: %s\n", err, shortUrl, originalUrl))
 	}
 }
+
+func RetriveInitialUrl(shortUrl string) string {
+	result, err := storeService.redisClient.Get(ctx, shortUrl).Error()
+	if err != nil {
+		panic(fmt.Sprintf("Failed RetriveIntialUrl url | Error: %v - shortUrl: %s\n", err, shortUrl))
+	}
+	return result
+}
