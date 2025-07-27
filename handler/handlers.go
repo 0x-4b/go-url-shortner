@@ -1,6 +1,10 @@
 package handler
 
 import (
+	"net/http"
+
+	"github.com/0x-4b/go-url-shortner/shortner"
+	"github.com/0x-4b/go-url-shortner/store"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,7 +14,19 @@ type UrlCreationRequest struct {
 }
 
 func CreateShortUrl(c *gin.Context) {
-	// Implementation later
+	var creationRequest UrlCreationRequest
+	if err := c.ShouldBindJSON(&creationRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	shortUrl := shortner.GenerateShortLink(creationRequest.LongUrl, creationRequest.UserId)
+	store.SaveUrlMapping(shortUrl, creationRequest.LongUrl, creationRequest.UserId)
+
+	host := "http://localhost:9808/"
+	c.JSON(200, gin.H{
+		"message":   "short url created successfully",
+		"short_url": host + shortUrl,
+	})
 }
 
 func HandleShortUrlRedirect(c *gin.Context) {
