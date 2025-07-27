@@ -8,6 +8,6 @@ func CreateShortUrl(c *gin.Context) {
 	// Implementation later
 }
 
-func HandleShortUrl(c *gin.Context) {
+func HandleShortUrlRedirect(c *gin.Context) {
 	// Implementation later
 }
