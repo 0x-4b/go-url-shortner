@@ -9,6 +9,8 @@ import (
 )
 
 func main() {
+	store.InitializeStore()
+	
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -23,8 +25,6 @@ func main() {
 	r.GET("/:shortUrl", func(c *gin.Context) {
 		handler.HandleShortUrlRedirect(c)
 	})
-
-	store.InitializeStore()
 
 	err := r.Run(":9808")
 	if err != nil {
