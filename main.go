@@ -12,10 +12,12 @@ func main() {
 	store.InitializeStore()
 
 	r := gin.Default()
+
+	r.Static("/static", "./static")
+	r.LoadHTMLGlob("static/*")
+
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Welcome to the URL Shortner API",
-		})
+		c.HTML(200, "index.html", nil)
 	})
 
 	r.POST("/create-short-url", func(c *gin.Context) {
